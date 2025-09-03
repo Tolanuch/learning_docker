@@ -1,0 +1,5 @@
+services:
+  learning-project:
+    image: learning-image:1.0
+    ports:
+      - 8090:8080
