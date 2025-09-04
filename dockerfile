@@ -1,9 +1,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0
 
-RUN mkdir /etc/app
+ARG app_dir=/etc/app
+ARG publish_dir=/etc/publish
 
-WORKDIR /etc/app
+RUN mkdir ${app_dir}
+RUN mkdir ${publish_dir}
 
-COPY ./bin/Release/net9.0/publish .
+WORKDIR ${app_dir}
+
+COPY . .
+
+RUN dotnet publish --output ${publish_dir}
+
+WORKDIR ${publish_dir}
 
 CMD [ "dotnet", "HelloWorldApp.dll"]
