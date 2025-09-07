@@ -1,4 +1,5 @@
 ﻿@page
+@using HelloWorldApp.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -8,4 +9,28 @@
     <h1 class="display-4">Welcome</h1>
     <h2 class="display-2">This is my demo project to test docker</h2>
     <p>it is runnning on port 8080</p>
+    <br>
+    <h1 class="display-4">You can add demo name and their age</h1>
+    <form method="post">
+        <div class="form-group">
+            <label for="ExampleInputName">Name</label>
+            <input type="text" class="form-control" id="ExampleInputName" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <label for="ExampleInputAge">Age</label>
+            <input type="digit" class="form-control" id="ExampleInputAge" placeholder="Enter age">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+<div class="text-center">
+    <ul class="list-group">
+        @foreach (People person in @Model.ListPeople)
+        {
+            <li class="list-group-item">
+                <p>Name: @person.Name   Age: @person.Age</p>
+            </li>
+        }
+    </ul>
 </div>
