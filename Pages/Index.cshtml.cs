@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using HelloWorldApp.Models;
 using HelloWorldApp.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace HelloWorldApp.Pages;
 
@@ -31,12 +30,8 @@ public class IndexModel : PageModel
         var people = _context.PeopleList?.ToList() ?? new List<People>();
         ListPeople.AddRange(people);
     }
-    public IActionResult OnPostSubmit(string name, string age)
+    public IActionResult OnPost(string name, string age)
     {
-        // if (_context.PeopleList == null)
-        // {
-        //     _context.PeopleList = new DbSet<People>();
-        // }
         _context.PeopleList.Add(new People
         {
             Name = name,
@@ -44,6 +39,6 @@ public class IndexModel : PageModel
         });
         _context.SaveChanges();
         // Process the user input
-        return RedirectToPage("Index");
+        return RedirectToPage();
     }
 }
