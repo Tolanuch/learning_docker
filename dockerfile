@@ -4,12 +4,19 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS builder
 ARG source_dir=/etc/source
 ARG publish_dir=/etc/publish
 
-WORKDIR ${source_dir}
+COPY . ${source_dir}
 
-COPY . .
+WORKDIR ${source_dir}/src
 
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet publish --output ${publish_dir}
+    dotnet publish --use-current-runtime --self-contained false --output ${publish_dir}
+RUN dotnet test ${source_dir}/tests
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS dev
+ARG source_dir=/etc/source
+WORKDIR ${source_dir}
+COPY ./src .
+CMD dotnet run --no-launch-profile
 
 # Run
 FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS runner

@@ -8,6 +8,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    # develop:
+    #   watch:
+    #     - action: rebuild
+    #       path: .
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
   db:
     image: postgres
     restart: always
